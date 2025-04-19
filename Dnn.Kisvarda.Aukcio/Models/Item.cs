@@ -18,7 +18,7 @@ using System.Web.Caching;
 
 namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models
 {
-    [TableName("Dnn.Kisvarda.Aukcio_Items")]
+    [TableName("Aukcio_Items")]
     //setup the primary key for table
     [PrimaryKey("ItemId", AutoIncrement = true)]
     //configure caching using PetaPoco
