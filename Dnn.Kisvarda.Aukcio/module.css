@@ -1,0 +1,116 @@
+/* Általános stílusok */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+h1, h2, h3 {
+    margin: 0 0 10px;
+    color: #222;
+}
+
+/* Auction container */
+.auction-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Auction image */
+.auction-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Bid section */
+.bid-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+    .bid-section h2 {
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .bid-section form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bid-section input[type="number"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .bid-section button {
+        padding: 10px 15px;
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+        .bid-section button:hover {
+            background: #0056b3;
+        }
+
+/* Recent bids */
+.recent-bids {
+    margin-top: 20px;
+}
+
+    .recent-bids ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .recent-bids li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .recent-bids li:last-child {
+            border-bottom: none;
+        }
+
+/* Other auctions */
+.other-auctions {
+    margin-top: 20px;
+}
+
+    .other-auctions ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .other-auctions li {
+        margin-bottom: 10px;
+    }
+
+    .other-auctions a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+        .other-auctions a:hover {
+            text-decoration: underline;
+        }

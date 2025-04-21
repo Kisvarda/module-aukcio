@@ -1,0 +1,46 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models.Item>>
+
+@using DotNetNuke.Web.Mvc.Helpers
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="../../module.css" />
+
+<div class="admin-control">
+    <h1>Admin Control Panel</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Highest Bid</th>
+                <th>Bidder ID</th>
+                <th>Time Remaining</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var auction in Model)
+            {
+                var timeRemaining = auction.AuctionEndTime.HasValue
+                    ? auction.AuctionEndTime.Value - DateTime.UtcNow
+                    : TimeSpan.Zero;
+
+                <tr>
+                    <td>@auction.ItemName</td>
+                    <td>$@(auction.HighestBid ?? 0)</td>
+                    <td>@auction.HighestBidUserId</td>
+                    <td>
+                        @if (timeRemaining.TotalSeconds <= 0)
+                        {
+                            <span class="ended-text">Ended</span>
+                        }
+                        else
+                        {
+                            @timeRemaining.ToString(@"dd\:hh\:mm\:ss")
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

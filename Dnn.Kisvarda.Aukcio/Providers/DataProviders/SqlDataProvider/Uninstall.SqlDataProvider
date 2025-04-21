@@ -1,3 +1,6 @@
 ﻿IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Aukcio_Items]') AND type in (N'U'))
 DROP TABLE {databaseOwner}[{objectQualifier}Aukcio_Items]
 GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Aukcio_Bids]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}Aukcio_Bids]
+GO

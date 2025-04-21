@@ -1,0 +1,69 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models.Item>>
+
+@using System
+@using DotNetNuke.Web.Mvc.Helpers
+@using DotNetNuke.Entities.Users
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userId = UserController.Instance.GetCurrentUserInfo().UserID;
+}
+
+<link rel="stylesheet" href="../../module.css" />
+
+<div class="auction-list">
+    @foreach (var item in Model)
+    {
+        var timeRemaining = item.AuctionEndTime.HasValue ? item.AuctionEndTime.Value - DateTime.UtcNow : TimeSpan.Zero;
+
+        <div class="auction-card">
+            <div class="auction-details">
+                <h2>@item.ItemName</h2>
+                <img class="auction-image" src="@item.ImageUrl" alt="@item.ItemName" />
+                <p>@item.ItemDescription</p>
+
+                <div class="auction-prices">
+                    <p><strong>Highest bid:</strong> $@item.HighestBid</p>
+                    <p><strong>Starting price:</strong> $@item.StartingPrice</p>
+                    <p><strong>Minimum increment:</strong> $@item.MinimumBidIncrement</p>
+                </div>
+
+                <form method="post" action="@Url.Action("PlaceBid", "Item")" class="bid-form">
+                    <input type="hidden" name="ItemId" value="@item.ItemId" />
+                    <input type="hidden" name="UserId" value="@userId" />
+                    <label>Bid Amount:</label>
+                    <input type="number" name="BidAmount" min="@item.MinimumBidIncrement" required />
+                    <button type="submit">Place bid</button>
+                </form>
+
+                <div class="time-remaining">
+                    @if (timeRemaining.TotalSeconds <= 0)
+                    {
+                        <span class="ended-text">Auction ended</span>
+                    }
+                    else
+                    {
+                        <span class="clock-icon">⏰</span> @timeRemaining.ToString(@"dd\:hh\:mm\:ss")
+                    }
+                </div>
+
+                <div class="recent-bids">
+                    <h4>Recent Bids</h4>
+                    <ul>
+                        @if (item.RecentBids?.Any() == true)
+                        {
+                            foreach (var bid in item.RecentBids)
+                            {
+                                <li>User ID: @bid.UserId - $@bid.Amount</li>
+                            }
+                        }
+                        else
+                        {
+                            <li>No bids yet.</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>
