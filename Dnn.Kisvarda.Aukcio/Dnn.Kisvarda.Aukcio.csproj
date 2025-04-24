@@ -154,7 +154,6 @@
     <Content Include="Views\Item\Edit.cshtml" />
     <Content Include="Views\Settings\Settings.cshtml" />
     <Content Include="Views\Item\AdminControl.cshtml" />
-    <Content Include="Views\Item\GuestAuctions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

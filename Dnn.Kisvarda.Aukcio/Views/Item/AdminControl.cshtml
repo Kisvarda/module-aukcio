@@ -29,14 +29,14 @@
                     <td>@auction.ItemName</td>
                     <td>$@(auction.HighestBid ?? 0)</td>
                     <td>@auction.HighestBidUserId</td>
-                    <td>
+                    <td class="time-remaining" data-time-remaining="@Math.Max(0, timeRemaining.TotalSeconds)">
                         @if (timeRemaining.TotalSeconds <= 0)
                         {
                             <span class="ended-text">Ended</span>
                         }
                         else
                         {
-                            @timeRemaining.ToString(@"dd\:hh\:mm\:ss")
+                            <span class="countdown">@timeRemaining.ToString(@"dd\:hh\:mm\:ss")</span>
                         }
                     </td>
                 </tr>
@@ -44,3 +44,35 @@
         </tbody>
     </table>
 </div>
+
+<script>document.addEventListener("DOMContentLoaded", function () {
+        const countdownElements = document.querySelectorAll(".time-remaining");
+
+        countdownElements.forEach(function (element) {
+            const totalSeconds = parseInt(element.getAttribute("data-time-remaining"), 10);
+            const countdownSpan = element.querySelector(".countdown");
+
+            if (totalSeconds > 0) {
+                let remainingSeconds = totalSeconds;
+
+                const interval = setInterval(function () {
+                    if (remainingSeconds <= 0) {
+                        clearInterval(interval);
+                        countdownSpan.textContent = "Ended";
+                        element.classList.add("ended-text");
+                    } else {
+                        const days = Math.floor(remainingSeconds / 86400);
+                        const hours = Math.floor((remainingSeconds % 86400) / 3600);
+                        const minutes = Math.floor((remainingSeconds % 3600) / 60);
+                        const seconds = remainingSeconds % 60;
+
+                        countdownSpan.textContent = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        remainingSeconds--;
+                    }
+                }, 1000);
+            } else {
+                countdownSpan.textContent = "Ended";
+                element.classList.add("ended-text");
+            }
+        });
+    });</script>

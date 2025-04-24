@@ -18,6 +18,7 @@ using Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components;
 using Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models;
 using System;
 using System.Linq;
+using System.Web.Compilation;
 using System.Web.Mvc;
 
 namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
@@ -50,32 +51,42 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
         }
 
         [HttpPost]
-        [DotNetNuke.Web.Mvc.Framework.ActionFilters.ValidateAntiForgeryToken]
-        public ActionResult Edit(Item item)
+        [System.Web.Mvc.ValidateAntiForgeryToken]
+        public ActionResult PlaceBid(int ItemId, int UserId, decimal BidAmount)
         {
-            if (item.ItemId == -1)
-            {
-                item.CreatedByUserId = User.UserID;
-                item.CreatedOnDate = DateTime.UtcNow;
-                item.LastModifiedByUserId = User.UserID;
-                item.LastModifiedOnDate = DateTime.UtcNow;
+            var item = ItemManager.Instance.GetItem(ItemId, ModuleContext.ModuleId);
 
-                ItemManager.Instance.CreateItem(item);
-            }
-            else
+            if (item == null)
             {
-                var existingItem = ItemManager.Instance.GetItem(item.ItemId, item.ModuleId);
-                existingItem.LastModifiedByUserId = User.UserID;
-                existingItem.LastModifiedOnDate = DateTime.UtcNow;
-                existingItem.ItemName = item.ItemName;
-                existingItem.ItemDescription = item.ItemDescription;
-                existingItem.AssignedUserId = item.AssignedUserId;
-
-                ItemManager.Instance.UpdateItem(existingItem);
+                return HttpNotFound("Item not found.");
             }
 
-            return RedirectToDefaultRoute();
+            if (BidAmount < item.HighestBid + item.MinimumBidIncrement)
+            {
+                ModelState.AddModelError("", "Bid amount must be higher than the current highest bid plus the minimum increment.");
+                return RedirectToAction("Index");
+            }
+
+            // Save the bid
+            var bid = new Bid
+            {
+                ItemId = ItemId,
+                UserId = UserId,
+                Amount = BidAmount,
+                BidTime = DateTime.UtcNow
+            };
+
+            BidManager.Instance.CreateBid(bid);
+
+            // Update the item's highest bid
+            item.HighestBid = BidAmount;
+            ItemManager.Instance.UpdateItem(item);
+
+            TempData["SuccessMessage"] = "Your bid has been successfully submitted!";
+
+            return RedirectToAction("Index");
         }
+
 
         [ModuleAction(ControlKey = "Edit", TitleKey = "AddItem")]
         public ActionResult Index()

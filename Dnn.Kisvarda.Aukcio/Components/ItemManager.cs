@@ -27,6 +27,33 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components
         void UpdateItem(Item t);
     }
 
+    public class BidManager
+    {
+        private static readonly BidManager _instance = new BidManager();
+
+        public static BidManager Instance => _instance;
+
+        private BidManager() { }
+
+        public void CreateBid(Bid bid)
+        {
+            using (var context = DataContext.Instance())
+            {
+                var repo = context.GetRepository<Bid>();
+                repo.Insert(bid);
+            }
+        }
+
+        public IEnumerable<Bid> GetBidsByItemId(int itemId)
+        {
+            using (var context = DataContext.Instance())
+            {
+                var repo = context.GetRepository<Bid>();
+                return repo.Get(itemId);
+            }
+        }
+    }
+
     internal class ItemManager : ServiceLocator<IItemManager, ItemManager>, IItemManager
     {
         public void CreateItem(Item t)

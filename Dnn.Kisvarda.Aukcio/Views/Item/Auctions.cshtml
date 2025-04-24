@@ -28,7 +28,7 @@
                     <p><strong>Minimum increment:</strong> $@item.MinimumBidIncrement</p>
                 </div>
 
-                <form method="post" action="@Url.Action("PlaceBid", "Item")" class="bid-form">
+                <form action="@Url.Action("PlaceBid", "Item")" method="post" class="bid-form">
                     <input type="hidden" name="ItemId" value="@item.ItemId" />
                     <input type="hidden" name="UserId" value="@userId" />
                     <label>Bid Amount:</label>
@@ -36,28 +36,31 @@
                     <button type="submit">Place bid</button>
                 </form>
 
-                <div class="time-remaining">
+                <div class="time-remaining" data-time-remaining="@Math.Max(0, timeRemaining.TotalSeconds)">
                     @if (timeRemaining.TotalSeconds <= 0)
                     {
-                        <span class="ended-text">Auction ended</span>
+                        <span class="ended-text" aria-label="Auction ended">Auction ended</span>
                     }
                     else
                     {
-                        <span class="clock-icon">⏰</span> @timeRemaining.ToString(@"dd\:hh\:mm\:ss")
+                        <span class="clock-icon" aria-label="Time remaining">⏰</span>
+                        <span class="countdown">@timeRemaining.ToString(@"dd\:hh\:mm\:ss")</span>
                     }
                 </div>
 
                 <div class="recent-bids">
                     <h4>Recent Bids</h4>
                     <ul>
-                        @if (item.RecentBids?.Any() == true)
-                        {
-                            foreach (var bid in item.RecentBids)
+                        @{
+                            bool hasBids = false;
+                            foreach (var bid in item.RecentBids ?? new List<Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models.Bid>())
                             {
+                                hasBids = true;
                                 <li>User ID: @bid.UserId - $@bid.Amount</li>
                             }
                         }
-                        else
+
+                        @if (!hasBids)
                         {
                             <li>No bids yet.</li>
                         }
@@ -67,3 +70,36 @@
         </div>
     }
 </div>
+
+<script>document.addEventListener("DOMContentLoaded", function () {
+        const countdownElements = document.querySelectorAll(".time-remaining");
+
+        countdownElements.forEach(function (element) {
+            const totalSeconds = parseInt(element.getAttribute("data-time-remaining"), 10);
+            const countdownSpan = element.querySelector(".countdown");
+
+            if (totalSeconds > 0) {
+                let remainingSeconds = totalSeconds;
+
+                const interval = setInterval(function () {
+                    if (remainingSeconds <= 0) {
+                        clearInterval(interval);
+                        countdownSpan.textContent = "Auction ended";
+                        element.classList.add("ended-text");
+                    } else {
+                        const days = Math.floor(remainingSeconds / 86400);
+                        const hours = Math.floor((remainingSeconds % 86400) / 3600);
+                        const minutes = Math.floor((remainingSeconds % 3600) / 60);
+                        const seconds = remainingSeconds % 60;
+
+                        countdownSpan.textContent = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        remainingSeconds--;
+                    }
+                }, 1000);
+            } else {
+                countdownSpan.textContent = "Auction ended";
+                element.classList.add("ended-text");
+            }
+        });
+    });</script>
+

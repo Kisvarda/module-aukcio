@@ -28,6 +28,10 @@ CREATE TABLE {databaseOwner}{objectQualifier}Aukcio_Items
      TEXTIMAGE_ON [PRIMARY]
 GO
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Aukcio_Bids]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}Aukcio_Bids]
+GO
+
 CREATE TABLE {databaseOwner}{objectQualifier}Aukcio_Bids
 (
     BidId int NOT NULL IDENTITY(1,1),
