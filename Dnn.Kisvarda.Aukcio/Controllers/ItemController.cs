@@ -26,31 +26,7 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
     [DnnHandleError]
     public class ItemController : DnnController
     {
-
-        public ActionResult Delete(int itemId)
-        {
-            ItemManager.Instance.DeleteItem(itemId, ModuleContext.ModuleId);
-            return RedirectToDefaultRoute();
-        }
-
-        public ActionResult Edit(int itemId = -1)
-        {
-            DotNetNuke.Framework.JavaScriptLibraries.JavaScript.RequestRegistration(CommonJs.DnnPlugins);
-
-            var userlist = UserController.GetUsers(PortalSettings.PortalId);
-            var users = from user in userlist.Cast<UserInfo>().ToList()
-                        select new SelectListItem { Text = user.DisplayName, Value = user.UserID.ToString() };
-
-            ViewBag.Users = users;
-
-            var item = (itemId == -1)
-                 ? new Item { ModuleId = ModuleContext.ModuleId }
-                 : ItemManager.Instance.GetItem(itemId, ModuleContext.ModuleId);
-
-            return View(item);
-        }
-
-
+               
         [HttpPost]
         [System.Web.Mvc.ValidateAntiForgeryToken]
         public ActionResult Auctions(int ItemId, int UserId, decimal BidAmount)

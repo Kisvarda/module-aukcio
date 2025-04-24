@@ -60,16 +60,6 @@
 						<helpUrl />
 						<viewOrder>0</viewOrder>
 					</moduleControl>
-                  <moduleControl>
-                    <controlKey>Settings</controlKey>
-                    <controlSrc>Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers/Settings/Settings.mvc</controlSrc>
-                    <supportsPartialRendering>False</supportsPartialRendering>
-                    <controlTitle>Dnn.Kisvarda.Aukcio Settings</controlTitle>
-                    <controlType>Edit</controlType>
-                    <iconFile />
-                    <helpUrl />
-                    <viewOrder>0</viewOrder>
-                  </moduleControl>
                 </moduleControls>
               </moduleDefinition>
             </moduleDefinitions>
