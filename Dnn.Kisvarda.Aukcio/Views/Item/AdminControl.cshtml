@@ -1,6 +1,9 @@
 ﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models.Item>>
 
+@using System
 @using DotNetNuke.Web.Mvc.Helpers
+@using DotNetNuke.Entities.Users
+@using DotNetNuke.Framework.JavaScriptLibraries
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -45,7 +48,8 @@
     </table>
 </div>
 
-<script>document.addEventListener("DOMContentLoaded", function () {
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
         const countdownElements = document.querySelectorAll(".time-remaining");
 
         countdownElements.forEach(function (element) {
