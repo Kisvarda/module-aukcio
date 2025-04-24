@@ -50,37 +50,27 @@
                 <friendlyName>Dnn.Kisvarda.Aukcio</friendlyName>
                 <defaultCacheTime>0</defaultCacheTime>
                 <moduleControls>
-                  <moduleControl>
-                    <controlKey />
-                    <controlSrc>Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers/Item/Auctions.mvc</controlSrc>
-                    <supportsPartialRendering>False</supportsPartialRendering>
-                    <controlTitle />
-                    <controlType>View</controlType>
-                    <iconFile />
-                    <helpUrl />
-                    <viewOrder>0</viewOrder>
-                  </moduleControl>
 					<moduleControl>
-						<controlKey />
-						<controlSrc>Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers/Item/GuestActions.mvc</controlSrc>
+						<controlKey>Auctions</controlKey>
+						<controlSrc>Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers/Item/Auctions.mvc</controlSrc>
 						<supportsPartialRendering>False</supportsPartialRendering>
-						<controlTitle />
+						<controlTitle>Auctions View</controlTitle>
 						<controlType>View</controlType>
 						<iconFile />
 						<helpUrl />
 						<viewOrder>0</viewOrder>
 					</moduleControl>
 					<moduleControl>
-						<controlKey />
+						<controlKey>Admin</controlKey>
 						<controlSrc>Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers/Item/AdminControl.mvc</controlSrc>
 						<supportsPartialRendering>False</supportsPartialRendering>
-						<controlTitle />
+						<controlTitle>Admin Control Panel</controlTitle>
 						<controlType>View</controlType>
 						<iconFile />
 						<helpUrl />
 						<viewOrder>0</viewOrder>
 					</moduleControl>
-                  <moduleControl>
+					<moduleControl>
                     <controlKey>Edit</controlKey>
                     <controlSrc>Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers/Item/Edit.mvc</controlSrc>
                     <supportsPartialRendering>False</supportsPartialRendering>
