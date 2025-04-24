@@ -50,9 +50,10 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
             return View(item);
         }
 
+
         [HttpPost]
         [System.Web.Mvc.ValidateAntiForgeryToken]
-        public ActionResult PlaceBid(int ItemId, int UserId, decimal BidAmount)
+        public ActionResult Auctions(int ItemId, int UserId, decimal BidAmount)
         {
             var item = ItemManager.Instance.GetItem(ItemId, ModuleContext.ModuleId);
 
@@ -67,7 +68,6 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Save the bid
             var bid = new Bid
             {
                 ItemId = ItemId,
@@ -78,7 +78,6 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
 
             BidManager.Instance.CreateBid(bid);
 
-            // Update the item's highest bid
             item.HighestBid = BidAmount;
             ItemManager.Instance.UpdateItem(item);
 
@@ -91,6 +90,7 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
         [ModuleAction(ControlKey = "Edit", TitleKey = "AddItem")]
         public ActionResult Index()
         {
+            
             var items = ItemManager.Instance.GetItems(ModuleContext.ModuleId);
             return View(items);
         }

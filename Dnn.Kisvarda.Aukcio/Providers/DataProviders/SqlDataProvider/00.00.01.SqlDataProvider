@@ -18,7 +18,7 @@ CREATE TABLE {databaseOwner}{objectQualifier}Aukcio_Items
     AuctionEndTime datetime NULL,
     MinimumBidIncrement decimal(18, 2) NULL,
     StartingPrice decimal(18, 2) NOT NULL,
-    PRIMARY KEY (ItemId) -- Define the primary key here
+    PRIMARY KEY (ItemId)
     )  ON [PRIMARY]
      TEXTIMAGE_ON [PRIMARY]
 GO

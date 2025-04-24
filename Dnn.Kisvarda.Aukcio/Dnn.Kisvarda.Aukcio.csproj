@@ -151,9 +151,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Item\Auctions.cshtml" />
-    <Content Include="Views\Item\Edit.cshtml" />
     <Content Include="Views\Settings\Settings.cshtml" />
-    <Content Include="Views\Item\AdminControl.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
