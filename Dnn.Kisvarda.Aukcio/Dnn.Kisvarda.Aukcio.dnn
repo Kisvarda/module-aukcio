@@ -49,19 +49,19 @@
               <moduleDefinition>
                 <friendlyName>Dnn.Kisvarda.Aukcio</friendlyName>
                 <defaultCacheTime>0</defaultCacheTime>
-                <moduleControls>
-					<moduleControl>
-						<controlKey>Auctions</controlKey>
-						<controlSrc>Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers/Item/Auctions.mvc</controlSrc>
-						<supportsPartialRendering>False</supportsPartialRendering>
-						<controlTitle>Auctions View</controlTitle>
-						<controlType>View</controlType>
-						<iconFile />
-						<helpUrl />
-						<viewOrder>0</viewOrder>
-					</moduleControl>
-                </moduleControls>
-              </moduleDefinition>
+				  <moduleControls>
+					  <moduleControl>
+						  <controlKey />
+						  <controlSrc>Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers/Item/Auctions.mvc</controlSrc>
+						  <supportsPartialRendering>False</supportsPartialRendering>
+						  <controlTitle>Auctions View</controlTitle>
+						  <controlType>View</controlType>
+						  <iconFile />
+						  <helpUrl />
+						  <viewOrder>0</viewOrder>
+					  </moduleControl>
+				  </moduleControls>
+			  </moduleDefinition>
             </moduleDefinitions>
           </desktopModule>
         </component>
