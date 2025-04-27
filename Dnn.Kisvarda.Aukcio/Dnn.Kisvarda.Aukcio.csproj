@@ -14,7 +14,7 @@
     <RootNamespace>Kisvarda.Dnn.Dnn.Kisvarda.Aukcio</RootNamespace>
     <AssemblyName>Dnn.Kisvarda.Aukcio</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -180,8 +180,6 @@
           <DevelopmentServerVPath>
           </DevelopmentServerVPath>
           <IISUrl>http://www.dnndev.me:8080/desktopmodules/mvc/Dnn.Kisvarda.Aukcio</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://www.dnndev.me:8080</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
