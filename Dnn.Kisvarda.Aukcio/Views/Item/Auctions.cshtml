@@ -37,7 +37,7 @@
                     <p><strong>Minimum increment:</strong> $@item.MinimumBidIncrement</p>
                 </div>
 
-                <form action="@Url.Action("Auctions", "Item")" method="post" class="bid-form">
+                <form action="@Url.Action("Auctions", "Item", new { itemId = item.ItemId })" method="post" class="bid-form">
                     <input type="hidden" name="ItemId" value="@item.ItemId" />
                     <input type="hidden" name="UserId" value="@userId" />
                     <label>Bid Amount:</label>

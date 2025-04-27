@@ -26,12 +26,25 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
     [DnnHandleError]
     public class ItemController : DnnController
     {
-               
+
+        [HttpGet]
+        public ActionResult Auctions(int? itemId)
+        {
+            var item = ItemManager.Instance.GetItem(itemId ?? 0, ModuleContext.ModuleId);
+            if (item == null)
+            {
+                return HttpNotFound("Item not found.");
+            }
+
+            return View(item);
+        }
+
+
         [HttpPost]
         [System.Web.Mvc.ValidateAntiForgeryToken]
-        public ActionResult Auctions(int ItemId, int UserId, decimal BidAmount)
+        public ActionResult Auctions(int? ItemId, int? UserId, decimal? BidAmount)
         {
-            var item = ItemManager.Instance.GetItem(ItemId, ModuleContext.ModuleId);
+            var item = ItemManager.Instance.GetItem(ItemId ?? 0, ModuleContext.ModuleId);
 
             if (item == null)
             {
@@ -46,9 +59,9 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
 
             var bid = new Bid
             {
-                ItemId = ItemId,
-                UserId = UserId,
-                Amount = BidAmount,
+                ItemId = ItemId ?? 0,
+                UserId = UserId ?? 0,
+                Amount = BidAmount ?? 0,
                 BidTime = DateTime.UtcNow
             };
 
