@@ -17,17 +17,13 @@ using System.Web.Caching;
 
 namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models
 {
-    [TableName("Auction_Bids")]
-    [PrimaryKey("BidId", AutoIncrement = true)]
-    [Cacheable("Bids", CacheItemPriority.Default, 20)]
-    public class Bid
+    [TableName("Auction_Users")]
+    [PrimaryKey("UserId", AutoIncrement = true)]
+    [Cacheable("Users", CacheItemPriority.Default, 20)]
+    public class User
     {
-        public int BidId { get; set; } = -1;
-        public int ItemId { get; set; }
-        public int UserId { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime BidTime { get; set; } = DateTime.UtcNow;
+        public int UserId { get; set; } = -1;
+        public string UserName { get; set; }
+        public string BillingAddress { get; set; }
     }
 }
-
-

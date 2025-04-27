@@ -2,12 +2,26 @@
 /*****              SqlDataProvider                     *****/
 /************************************************************/
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Aukcio_Items]') AND type in (N'U'))
-DROP TABLE {databaseOwner}[{objectQualifier}Aukcio_Items]
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Auction_Users]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}Auction_Users]
 GO
 
-CREATE TABLE {databaseOwner}{objectQualifier}Aukcio_Items
-    (
+CREATE TABLE {databaseOwner}{objectQualifier}Auction_Users
+(
+    UserId int NOT NULL IDENTITY(1, 1),
+    UserName nvarchar(255) NOT NULL,
+    BillingAddress nvarchar(500) NULL,
+    PRIMARY KEY (UserId)
+) ON [PRIMARY]
+GO
+
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Auction_Items]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}Auction_Items]
+GO
+
+CREATE TABLE {databaseOwner}{objectQualifier}Auction_Items
+(
     ItemId int NOT NULL IDENTITY (1, 1),
     ItemName nvarchar(MAX) NOT NULL,
     ItemDescription nvarchar(MAX) NOT NULL,
@@ -18,25 +32,28 @@ CREATE TABLE {databaseOwner}{objectQualifier}Aukcio_Items
     AuctionEndTime datetime NULL,
     MinimumBidIncrement decimal(18, 2) NULL,
     StartingPrice decimal(18, 2) NOT NULL,
-    PRIMARY KEY (ItemId)
-    )  ON [PRIMARY]
-     TEXTIMAGE_ON [PRIMARY]
+    PRIMARY KEY (ItemId),
+    FOREIGN KEY (HighestBidUserId) REFERENCES {databaseOwner}{objectQualifier}Auction_Users(UserId)
+) ON [PRIMARY]
+TEXTIMAGE_ON [PRIMARY]
 GO
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Aukcio_Bids]') AND type in (N'U'))
-DROP TABLE {databaseOwner}[{objectQualifier}Aukcio_Bids]
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Auction_Bids]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}Auction_Bids]
 GO
 
-CREATE TABLE {databaseOwner}{objectQualifier}Aukcio_Bids
+CREATE TABLE {databaseOwner}{objectQualifier}Auction_Bids
 (
-    BidId int NOT NULL IDENTITY(1,1),
+    BidId int NOT NULL IDENTITY(1, 1),
     ItemId int NOT NULL,
     UserId int NOT NULL,
     Amount decimal(18, 2) NOT NULL,
     BidTime datetime NOT NULL,
     PRIMARY KEY (BidId),
-    FOREIGN KEY (ItemId) REFERENCES {databaseOwner}{objectQualifier}Aukcio_Items(ItemId)
-)
+    FOREIGN KEY (ItemId) REFERENCES {databaseOwner}{objectQualifier}Auction_Items(ItemId),
+    FOREIGN KEY (UserId) REFERENCES {databaseOwner}{objectQualifier}Auction_Users(UserId)
+) ON [PRIMARY]
 GO
 
 /************************************************************/

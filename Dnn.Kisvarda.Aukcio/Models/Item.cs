@@ -19,7 +19,7 @@ using System.Web.Configuration;
 
 namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models
 {
-    [TableName("Aukcio_Items")]
+    [TableName("Auctions_Items")]
     [PrimaryKey("ItemId", AutoIncrement = true)]
     [Cacheable("Items", CacheItemPriority.Default, 20)]
     [Scope("ModuleId")]
@@ -30,7 +30,6 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models
         public string ItemDescription { get; set; }
         public string ImageUrl { get; set; }
         public int ModuleId { get; set; }
-
         public decimal? HighestBid { get; set; }
         public int? HighestBidUserId { get; set; }
         public DateTime? AuctionEndTime { get; set; }

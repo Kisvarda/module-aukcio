@@ -1,6 +1,11 @@
-﻿IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Aukcio_Items]') AND type in (N'U'))
-DROP TABLE {databaseOwner}[{objectQualifier}Aukcio_Items]
+﻿IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Auction_Bids]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}Auction_Bids]
 GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Aukcio_Bids]') AND type in (N'U'))
-DROP TABLE {databaseOwner}[{objectQualifier}Aukcio_Bids]
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Auction_Items]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}Auction_Items]
+GO
+
+IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'{databaseOwner}[{objectQualifier}Auction_Users]') AND type in (N'U'))
+DROP TABLE {databaseOwner}[{objectQualifier}Auction_Users]
 GO
