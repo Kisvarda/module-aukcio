@@ -17,7 +17,6 @@ using DotNetNuke.Web.Mvc.Framework.Controllers;
 using Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components;
 using Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models;
 using System;
-using System.Linq;
 using System.Web.Compilation;
 using System.Web.Mvc;
 

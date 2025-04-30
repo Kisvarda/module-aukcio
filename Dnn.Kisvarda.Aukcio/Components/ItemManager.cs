@@ -42,6 +42,7 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components
                 var repo = context.GetRepository<Bid>();
                 repo.Insert(bid);
             }
+
         }
 
         public IEnumerable<Bid> GetBidsByItemId(int itemId)
@@ -51,6 +52,7 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components
                 var repo = context.GetRepository<Bid>();
                 return repo.Get(itemId);
             }
+
         }
     }
 
