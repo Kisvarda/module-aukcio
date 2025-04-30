@@ -10,5 +10,6 @@
         public string ImageUrl { get; set; }
         public int ModuleId { get; set; }
         public decimal StartingPrice { get; set; }
+        public System.DateTime? AuctionEndTime { get; set; }
     }
 }
