@@ -25,7 +25,7 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models
     [Scope("ModuleId")]
     public class Item
     {
-        public int ItemId { get; set; } = -1;
+        public int ItemId { get; set; }
         public string ItemName { get; set; }
         public string ItemDescription { get; set; }
         public string ImageUrl { get; set; }

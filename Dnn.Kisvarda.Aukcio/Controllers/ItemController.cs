@@ -27,51 +27,68 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
     {
 
         [HttpGet]
-        public ActionResult Auctions(int? itemId)
+        public ActionResult Auctions()
         {
-            var item = ItemManager.Instance.GetItem(itemId ?? 0, ModuleContext.ModuleId);
-            if (item == null)
-            {
-                return HttpNotFound("Item not found.");
-            }
+               
+                
+                var item1 = ItemManager.Instance.GetItem(1, ModuleContext.ModuleId);
 
-            return View(item);
+
+                if (item1 == null)
+                {
+                    return HttpNotFound("Item not found.");
+                }
+
+                return View(item1);
         }
 
 
         [HttpPost]
         [System.Web.Mvc.ValidateAntiForgeryToken]
         public ActionResult Auctions(int? ItemId, int? UserId, decimal? BidAmount)
-        {
-            var item = ItemManager.Instance.GetItem(ItemId ?? 0, ModuleContext.ModuleId);
 
-            if (item == null)
+        {
+
+            if (ModuleContext.ModuleId == null)
             {
                 return HttpNotFound("Item not found.");
+
             }
 
-            if (BidAmount < item.HighestBid + item.MinimumBidIncrement)
+            else
             {
-                ModelState.AddModelError("", "Bid amount must be higher than the current highest bid plus the minimum increment.");
+               
+                var item = ItemManager.Instance.GetItem(ItemId ?? 0, ModuleContext.ModuleId);
+
+                if (item == null)
+                {
+                    return HttpNotFound("Item not found.");
+                }
+
+                if (BidAmount < item.HighestBid + item.MinimumBidIncrement)
+                {
+                    ModelState.AddModelError("", "Bid amount must be higher than the current highest bid plus the minimum increment.");
+                    return RedirectToAction("Index");
+                }
+
+                var bid = new Bid
+                {
+                    ItemId = ItemId ?? 0,
+                    UserId = UserId ?? 0,
+                    Amount = BidAmount ?? 0,
+                    BidTime = DateTime.UtcNow
+                };
+
+                BidManager.Instance.CreateBid(bid);
+
+                item.HighestBid = BidAmount;
+                ItemManager.Instance.UpdateItem(item);
+
+                TempData["SuccessMessage"] = "Your bid has been successfully submitted!";
+
                 return RedirectToAction("Index");
+
             }
-
-            var bid = new Bid
-            {
-                ItemId = ItemId ?? 0,
-                UserId = UserId ?? 0,
-                Amount = BidAmount ?? 0,
-                BidTime = DateTime.UtcNow
-            };
-
-            BidManager.Instance.CreateBid(bid);
-
-            item.HighestBid = BidAmount;
-            ItemManager.Instance.UpdateItem(item);
-
-            TempData["SuccessMessage"] = "Your bid has been successfully submitted!";
-
-            return RedirectToAction("Index");
         }
 
 

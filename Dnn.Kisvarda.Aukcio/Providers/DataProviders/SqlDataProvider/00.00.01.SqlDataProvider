@@ -56,6 +56,35 @@ CREATE TABLE {databaseOwner}{objectQualifier}Auction_Bids
 ) ON [PRIMARY]
 GO
 
+-- Feltöltés: Auction_Users
+INSERT INTO {databaseOwner}{objectQualifier}Auction_Users (UserName, BillingAddress)
+VALUES 
+(N'janos.kovacs', N'Budapest, Fő utca 12.'),
+(N'anna.nagy', N'Szeged, Kossuth Lajos utca 5.'),
+(N'peter.kiss', N'Debrecen, Arany János utca 33.'),
+(N'erika.toth', N'Miskolc, Diófa utca 22.'),
+(N'laszlo.szabo', N'Győr, Petőfi Sándor utca 1.');
+
+-- Feltöltés: Auction_Items
+INSERT INTO {databaseOwner}{objectQualifier}Auction_Items (
+    ItemName, ItemDescription, ImageUrl, ModuleId, HighestBid, HighestBidUserId, AuctionEndTime, MinimumBidIncrement, StartingPrice)
+VALUES 
+(N'Festmény - Tópart', N'Egy gyönyörű tóparti tájképet ábrázoló festmény.', N'/images/lakepainting.jpg', 101, 15000.00, 2, '2025-05-10 18:00:00', 500.00, 10000.00),
+(N'Antik óra', N'Rendkívül ritka 19. századi zsebóra.', N'/images/antique_watch.jpg', 102, 23000.00, 3, '2025-05-08 20:00:00', 1000.00, 20000.00),
+(N'Kerékpár', N'Újszerű állapotú trekking kerékpár.', N'/images/bike.jpg', 103, NULL, NULL, '2025-05-12 12:00:00', 1000.00, 50000.00),
+(N'Laptop', N'Használt, de jó állapotú laptop (Intel i7, 16GB RAM).', N'/images/laptop.jpg', 104, 120000.00, 5, '2025-05-09 15:00:00', 5000.00, 100000.00);
+
+-- Feltöltés: Auction_Bids
+INSERT INTO {databaseOwner}{objectQualifier}Auction_Bids (ItemId, UserId, Amount, BidTime)
+VALUES 
+(1, 2, 12000.00, '2025-05-01 10:15:00'),
+(1, 3, 13000.00, '2025-05-01 12:00:00'),
+(1, 2, 15000.00, '2025-05-02 09:30:00'),
+(2, 3, 21000.00, '2025-05-01 11:45:00'),
+(2, 4, 22000.00, '2025-05-01 13:00:00'),
+(2, 3, 23000.00, '2025-05-01 14:30:00'),
+(4, 5, 120000.00, '2025-05-03 17:20:00');
+
 /************************************************************/
 /*****              SqlDataProvider                     *****/
 /************************************************************/
