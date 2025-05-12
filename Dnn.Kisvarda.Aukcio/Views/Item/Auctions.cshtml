@@ -2,25 +2,21 @@
 
 
 @using System
-    @using DotNetNuke.Web.Mvc.Helpers
-    @using DotNetNuke.Entities.Users
-    @using DotNetNuke.Framework.JavaScriptLibraries
+@using DotNetNuke.Web.Mvc.Helpers
+@using DotNetNuke.Entities.Users
+@using DotNetNuke.Framework.JavaScriptLibraries
 
-    @{
-        Layout = "~/Views/Shared/_Layout.cshtml";
-        var userId = UserController.Instance.GetCurrentUserInfo().UserID;
-    }
 
-    <link rel="stylesheet" href="../../module.css" />
+    @*<link rel="stylesheet" href="../../module.css" />*@
 
     <div class="auction-list">
 
-        @if (TempData["SuccessMessage"] != null)
+        @*@if (TempData["SuccessMessage"] != null)
         {
             <div class="alert alert-success">
                 @TempData["SuccessMessage"]
             </div>
-        }
+        }*@
 
         @foreach (var item in Model)
         {
@@ -40,7 +36,7 @@
 
                     <form action="@Url.Action("Auctions", "Item", new { itemId = item.ItemId })" method="post" class="bid-form">
                         <input type="hidden" name="ItemId" value="@item.ItemId" />
-                        <input type="hidden" name="UserId" value="@userId" />
+                        @*<input type="hidden" name="UserId" value="@userId" />*@
                         <label>Bid Amount:</label>
                         <input type="number" name="BidAmount" min="@item.MinimumBidIncrement" required />
                         <button type="submit">Place bid</button>
@@ -81,7 +77,7 @@
         }
     </div>
 
-    <script>
+    <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
             const countdownElements = document.querySelectorAll(".time-remaining");
 
@@ -112,5 +108,7 @@
                     element.classList.add("ended-text");
                 }
             });
-        });</script>*
+        });
+
+        </script>
 

@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components
 {
-    internal interface IItemManager
+    public interface IItemManager
     {
         void CreateItem(Item t);
         void DeleteItem(int itemId, int moduleId);
@@ -27,36 +27,7 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components
         void UpdateItem(Item t);
     }
 
-    public class BidManager
-    {
-        private static readonly BidManager _instance = new BidManager();
-
-        public static BidManager Instance => _instance;
-
-        private BidManager() { }
-
-        public void CreateBid(Bid bid)
-        {
-            using (var context = DataContext.Instance())
-            {
-                var repo = context.GetRepository<Bid>();
-                repo.Insert(bid);
-            }
-
-        }
-
-        public IEnumerable<Bid> GetBidsByItemId(int itemId)
-        {
-            using (var context = DataContext.Instance())
-            {
-                var repo = context.GetRepository<Bid>();
-                return repo.Get(itemId);
-            }
-
-        }
-    }
-
-    internal class ItemManager : ServiceLocator<IItemManager, ItemManager>, IItemManager
+    public class ItemManager : ServiceLocator<IItemManager, ItemManager>, IItemManager
     {
         public void CreateItem(Item t)
         {
@@ -116,6 +87,35 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components
         protected override System.Func<IItemManager> GetFactory()
         {
             return () => new ItemManager();
+        }
+    }
+
+    public class BidManager
+    {
+        private static readonly BidManager _instance = new BidManager();
+
+        public static BidManager Instance => _instance;
+
+        private BidManager() { }
+
+        public void CreateBid(Bid bid)
+        {
+            using (var context = DataContext.Instance())
+            {
+                var repo = context.GetRepository<Bid>();
+                repo.Insert(bid);
+            }
+
+        }
+
+        public IEnumerable<Bid> GetBidsByItemId(int itemId)
+        {
+            using (var context = DataContext.Instance())
+            {
+                var repo = context.GetRepository<Bid>();
+                return repo.Get(itemId);
+            }
+
         }
     }
 }
