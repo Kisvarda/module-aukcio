@@ -17,6 +17,7 @@ using DotNetNuke.Web.Mvc.Framework.Controllers;
 using Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components;
 using Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models;
 using System;
+using System.Collections.Generic;
 using System.Web.Compilation;
 using System.Web.Mvc;
 
@@ -28,40 +29,40 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Controllers
     {
 
         [HttpGet]
-        //public ActionResult Auctions()
-        //{
+        public ActionResult Auctions()
+        {
                
                 
-        //        var item1 = ItemManager.Instance.GetItem(1, ModuleContext.ModuleId);
+                var item1 = ItemManager.Instance.GetItem(1, ModuleContext.ModuleId);
 
 
-        //        if (item1 == null)
-        //        {
-        //            return HttpNotFound("Item not found.");
-        //        }
+                if (item1 == null)
+                {
+                    return HttpNotFound("Item not found.");
+                }
 
-        //        return View(item1);
-        //}
-
-         public ActionResult Auctions()
-        {
-
-            Item newItem = new Item()
-            {
-                ItemId = 1,
-                ItemName = "teszt",
-                ItemDescription = "teszt",
-                ImageUrl = "facebook.com",
-                ModuleId = 1,
-                HighestBid = 100,
-                HighestBidUserId = 2,
-                AuctionEndTime = DateTime.Now,
-                MinimumBidIncrement = 1,
-                StartingPrice = 1
-            };
-
-            return View(newItem);
+                return View(new List<Item> { item1 });
         }
+
+        // public ActionResult Auctions()
+        //{
+
+        //    Item newItem = new Item()
+        //    {
+        //        ItemId = 1,
+        //        ItemName = "teszt",
+        //        ItemDescription = "teszt",
+        //        ImageUrl = "facebook.com",
+        //        ModuleId = 1,
+        //        HighestBid = 100,
+        //        HighestBidUserId = 2,
+        //        AuctionEndTime = DateTime.Now,
+        //        MinimumBidIncrement = 1,
+        //        StartingPrice = 1
+        //    };
+
+        //    return View(newItem);
+        //}
 
         [HttpPost]
         [System.Web.Mvc.ValidateAntiForgeryToken]

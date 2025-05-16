@@ -6,109 +6,112 @@
 @using DotNetNuke.Entities.Users
 @using DotNetNuke.Framework.JavaScriptLibraries
 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userId = UserController.Instance.GetCurrentUserInfo().UserID;
+}
+<link rel="stylesheet" href="../../module.css" />
 
-    @*<link rel="stylesheet" href="../../module.css" />*@
+<div class="auction-list">
 
-    <div class="auction-list">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
 
-        @*@if (TempData["SuccessMessage"] != null)
-        {
-            <div class="alert alert-success">
-                @TempData["SuccessMessage"]
-            </div>
-        }*@
+    @foreach (var item in Model)
+    {
+        var timeRemaining = item.AuctionEndTime.HasValue ? item.AuctionEndTime.Value - DateTime.UtcNow : TimeSpan.Zero;
 
-        @foreach (var item in Model)
-        {
-            var timeRemaining = item.AuctionEndTime.HasValue ? item.AuctionEndTime.Value - DateTime.UtcNow : TimeSpan.Zero;
+        <div class="auction-card">
+            <div class="auction-details">
+                <h2>@item.ItemName</h2>
+                <img class="auction-image" src="@item.ImageUrl" alt="@item.ItemName" />
+                <p>@item.ItemDescription</p>
 
-            <div class="auction-card">
-                <div class="auction-details">
-                    <h2>@item.ItemName</h2>
-                    <img class="auction-image" src="@item.ImageUrl" alt="@item.ItemName" />
-                    <p>@item.ItemDescription</p>
+                <div class="auction-prices">
+                    <p><strong>Highest bid:</strong> $@item.HighestBid</p>
+                    <p><strong>Starting price:</strong> $@item.StartingPrice</p>
+                    <p><strong>Minimum increment:</strong> $@item.MinimumBidIncrement</p>
+                </div>
 
-                    <div class="auction-prices">
-                        <p><strong>Highest bid:</strong> $@item.HighestBid</p>
-                        <p><strong>Starting price:</strong> $@item.StartingPrice</p>
-                        <p><strong>Minimum increment:</strong> $@item.MinimumBidIncrement</p>
-                    </div>
+                <form action="@Url.Action("Auctions", "Item", new { itemId = item.ItemId })" method="post" class="bid-form">
+                    <input type="hidden" name="ItemId" value="@item.ItemId" />
+                    <input type="hidden" name="UserId" value="@userId" />
+                    <label>Bid Amount:</label>
+                    <input type="number" name="BidAmount" min="@item.MinimumBidIncrement" required />
+                    <button type="submit">Place bid</button>
+                </form>
 
-                    <form action="@Url.Action("Auctions", "Item", new { itemId = item.ItemId })" method="post" class="bid-form">
-                        <input type="hidden" name="ItemId" value="@item.ItemId" />
-                        @*<input type="hidden" name="UserId" value="@userId" />*@
-                        <label>Bid Amount:</label>
-                        <input type="number" name="BidAmount" min="@item.MinimumBidIncrement" required />
-                        <button type="submit">Place bid</button>
-                    </form>
+                <div class="time-remaining" data-time-remaining="@Math.Max(0, timeRemaining.TotalSeconds)">
+                    @if (timeRemaining.TotalSeconds <= 0)
+                    {
+                        <span class="ended-text" aria-label="Auction ended">Auction ended</span>
+                    }
+                    else
+                    {
+                        <span class="clock-icon" aria-label="Time remaining">⏰</span>
+                        <span class="countdown">@timeRemaining.ToString(@"dd\:hh\:mm\:ss")</span>
+                    }
+                </div>
 
-                    <div class="time-remaining" data-time-remaining="@Math.Max(0, timeRemaining.TotalSeconds)">
-                        @if (timeRemaining.TotalSeconds <= 0)
-                        {
-                            <span class="ended-text" aria-label="Auction ended">Auction ended</span>
-                        }
-                        else
-                        {
-                            <span class="clock-icon" aria-label="Time remaining">⏰</span>
-                            <span class="countdown">@timeRemaining.ToString(@"dd\:hh\:mm\:ss")</span>
-                        }
-                    </div>
-
-                    <div class="recent-bids">
-                        <h4>Recent Bids</h4>
-                        <ul>
-                            @{
-                                bool hasBids = false;
-                                foreach (var bid in item.RecentBids ?? new List<Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models.Bid>())
-                                {
-                                    hasBids = true;
-                                    <li>User ID: @bid.UserId - $@bid.Amount</li>
-                                }
-                            }
-
-                            @if (!hasBids)
+                <div class="recent-bids">
+                    <h4>Recent Bids</h4>
+                    <ul>
+                        @{
+                            bool hasBids = false;
+                            foreach (var bid in item.RecentBids ?? new List<Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models.Bid>())
                             {
-                                <li>No bids yet.</li>
+                                hasBids = true;
+                                <li>User ID: @bid.UserId - $@bid.Amount</li>
                             }
-                        </ul>
-                    </div>
+                        }
+
+                        @if (!hasBids)
+                        {
+                            <li>No bids yet.</li>
+                        }
+                    </ul>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>
 
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function () {
-            const countdownElements = document.querySelectorAll(".time-remaining");
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const countdownElements = document.querySelectorAll(".time-remaining");
 
-            countdownElements.forEach(function (element) {
-                const totalSeconds = parseInt(element.getAttribute("data-time-remaining"), 10);
-                const countdownSpan = element.querySelector(".countdown");
+        countdownElements.forEach(function (element) {
+            const totalSeconds = parseInt(element.getAttribute("data-time-remaining"), 10);
+            const countdownSpan = element.querySelector(".countdown");
 
-                if (totalSeconds > 0) {
-                    let remainingSeconds = totalSeconds;
+            if (totalSeconds > 0) {
+                let remainingSeconds = totalSeconds;
 
-                    const interval = setInterval(function () {
-                        if (remainingSeconds <= 0) {
-                            clearInterval(interval);
-                            countdownSpan.textContent = "Auction ended";
-                            element.classList.add("ended-text");
-                        } else {
-                            const days = Math.floor(remainingSeconds / 86400);
-                            const hours = Math.floor((remainingSeconds % 86400) / 3600);
-                            const minutes = Math.floor((remainingSeconds % 3600) / 60);
-                            const seconds = remainingSeconds % 60;
+                const interval = setInterval(function () {
+                    if (remainingSeconds <= 0) {
+                        clearInterval(interval);
+                        countdownSpan.textContent = "Auction ended";
+                        element.classList.add("ended-text");
+                    } else {
+                        const days = Math.floor(remainingSeconds / 86400);
+                        const hours = Math.floor((remainingSeconds % 86400) / 3600);
+                        const minutes = Math.floor((remainingSeconds % 3600) / 60);
+                        const seconds = remainingSeconds % 60;
 
-                            countdownSpan.textContent = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                            remainingSeconds--;
-                        }
-                    }, 1000);
-                } else {
-                    countdownSpan.textContent = "Auction ended";
-                    element.classList.add("ended-text");
-                }
-            });
+                        countdownSpan.textContent = `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                        remainingSeconds--;
+                    }
+                }, 1000);
+            } else {
+                countdownSpan.textContent = "Auction ended";
+                element.classList.add("ended-text");
+            }
         });
+    });
 
-        </script>
+</script>
 
