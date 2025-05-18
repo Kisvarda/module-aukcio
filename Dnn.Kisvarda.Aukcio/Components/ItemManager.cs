@@ -70,7 +70,7 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Components
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<Item>();
-                t = rep.GetById(itemId, moduleId);
+                t = rep.GetById(itemId);
             }
             return t;
         }

@@ -19,9 +19,9 @@ using System.Web.Configuration;
 
 namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models
 {
-    [TableName("Auctions_Items")]
+    [TableName("Auction_Items")]
     [PrimaryKey("ItemId", AutoIncrement = true)]
-    [Cacheable("Items", CacheItemPriority.Default, 20)]
+    [Cacheable("Auction_Items", CacheItemPriority.Default, 20)]
     [Scope("ModuleId")]
 
     public class Item
