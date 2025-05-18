@@ -37,6 +37,7 @@ namespace Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models
         public decimal MinimumBidIncrement { get; set; }
         public decimal StartingPrice { get; set; }
 
+        [IgnoreColumn]
         public IEnumerable<Bid> RecentBids { get; set; } = new List<Bid>();
 
       
