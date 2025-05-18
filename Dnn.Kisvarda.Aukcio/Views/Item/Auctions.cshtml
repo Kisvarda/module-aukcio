@@ -23,7 +23,7 @@
 
     @foreach (var item in Model)
     {
-        var timeRemaining = item.AuctionEndTime.HasValue ? item.AuctionEndTime.Value - DateTime.UtcNow : TimeSpan.Zero;
+        var timeRemaining = item.AuctionEndTime.HasValue ? item.AuctionEndTime.Value - DateTime.Now : TimeSpan.Zero;
 
         <div class="auction-card">
             <div class="auction-details">
@@ -53,7 +53,7 @@
                     else
                     {
                         <span class="clock-icon" aria-label="Time remaining">⏰</span>
-                        <span class="countdown">@timeRemaining.ToString(@"dd\:hh\:mm\:ss")</span>
+                        <span class="countdown">    @(timeRemaining.Days) days @(timeRemaining.Hours) hours @(timeRemaining.Minutes) minutes @(timeRemaining.Seconds) seconds</span>
                     }
                 </div>
 
