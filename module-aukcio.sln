@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dnn.Kisvarda.Aukcio", "Dnn.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionTester", "AuctionTester\AuctionTester.csproj", "{3CC4CAF9-86E2-4831-BFD7-902834786BB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dnn.Kisvarda.Aukcio.Tests", "Dnn.Kisvarda.Aukcio.Tests\Dnn.Kisvarda.Aukcio.Tests.csproj", "{53FCEB33-8FD8-476E-A430-14999B066258}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3CC4CAF9-86E2-4831-BFD7-902834786BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CC4CAF9-86E2-4831-BFD7-902834786BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CC4CAF9-86E2-4831-BFD7-902834786BB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53FCEB33-8FD8-476E-A430-14999B066258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53FCEB33-8FD8-476E-A430-14999B066258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53FCEB33-8FD8-476E-A430-14999B066258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53FCEB33-8FD8-476E-A430-14999B066258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
