@@ -1,5 +1,5 @@
 /* Általános stílusok */
-body {
+/*body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     margin: 0;
@@ -11,10 +11,10 @@ body {
 h1, h2, h3 {
     margin: 0 0 10px;
     color: #222;
-}
+}*/
 
 /* Auction container */
-.auction-container {
+/*.auction-container {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
@@ -22,18 +22,18 @@ h1, h2, h3 {
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+}*/
 
 /* Auction image */
-.auction-image {
+/*.auction-image {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
     margin-bottom: 20px;
-}
+}*/
 
 /* Bid section */
-.bid-section {
+/*.bid-section {
     margin-top: 20px;
     padding: 15px;
     background: #f5f5f5;
@@ -71,10 +71,10 @@ h1, h2, h3 {
 
         .bid-section button:hover {
             background: #0056b3;
-        }
+        }*/
 
 /* Recent bids */
-.recent-bids {
+/*.recent-bids {
     margin-top: 20px;
 }
 
@@ -90,10 +90,10 @@ h1, h2, h3 {
 
         .recent-bids li:last-child {
             border-bottom: none;
-        }
+        }*/
 
 /* Other auctions */
-.other-auctions {
+/*.other-auctions {
     margin-top: 20px;
 }
 
@@ -113,4 +113,4 @@ h1, h2, h3 {
 
         .other-auctions a:hover {
             text-decoration: underline;
-        }
+        }*/

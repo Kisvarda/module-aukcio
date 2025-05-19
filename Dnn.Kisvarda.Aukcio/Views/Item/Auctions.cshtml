@@ -25,55 +25,94 @@
     {
         var timeRemaining = item.AuctionEndTime.HasValue ? item.AuctionEndTime.Value - DateTime.Now : TimeSpan.Zero;
 
-        <div class="auction-card">
-            <div class="auction-details">
-                <h2>@item.ItemName</h2>
+
+        <div class="content-wrapper">
+
+            <div class="auction-content-left">
                 <img class="auction-image" src="@item.ImageUrl" alt="@item.ItemName" />
-                <p>@item.ItemDescription</p>
+            </div>
 
-                <div class="auction-prices">
-                    <p><strong>Highest bid:</strong> $@item.HighestBid</p>
-                    <p><strong>Starting price:</strong> $@item.StartingPrice</p>
-                    <p><strong>Minimum increment:</strong> $@item.MinimumBidIncrement</p>
-                </div>
+            <div class="auction-content-right">
+                <div class="auction-card">
+                    <div class="auction-details">
+                        <h2 class="auction-heading">@item.ItemName</h2>
 
-                <form action="@Url.Action("Auctions", "Item", new { itemId = item.ItemId })" method="post" class="bid-form">
-                    <input type="hidden" name="ItemId" value="@item.ItemId" />
-                    <input type="hidden" name="UserId" value="@userId" />
-                    <label>Bid Amount:</label>
-                    <input type="number" name="BidAmount" min="@item.MinimumBidIncrement" required />
-                    <button type="submit">Place bid</button>
-                </form>
+                        <p class="auction-description">@item.ItemDescription</p>
 
-                <div class="time-remaining" data-time-remaining="@Math.Max(0, timeRemaining.TotalSeconds)">
-                    @if (timeRemaining.TotalSeconds <= 0)
-                    {
-                        <span class="ended-text" aria-label="Auction ended">Auction ended</span>
-                    }
-                    else
-                    {
-                        <span class="clock-icon" aria-label="Time remaining">⏰</span>
-                        <span class="countdown">    @(timeRemaining.Days) days @(timeRemaining.Hours) hours @(timeRemaining.Minutes) minutes @(timeRemaining.Seconds) seconds</span>
-                    }
-                </div>
+                        <div class="auction-inputs-wrapper">
 
-                <div class="recent-bids">
-                    <h4>Recent Bids</h4>
-                    <ul>
-                        @{
-                            bool hasBids = false;
-                            foreach (var bid in item.RecentBids ?? new List<Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models.Bid>())
-                            {
-                                hasBids = true;
-                                <li>User ID: @bid.UserId - $@bid.Amount</li>
-                            }
-                        }
+                            <div class="auction-prices">
+                                <p class="input-tag">Highest bid:</p>
+                                <div class="max-bid">
+                                    $@item.HighestBid
+                                </div>
+                                <p class="input-tag">Starting price: <strong>$@item.StartingPrice</strong></p>
+                                <p class="input-tag">Minimum increment: <strong>$@item.MinimumBidIncrement</strong></p>
 
-                        @if (!hasBids)
-                        {
-                            <li>No bids yet.</li>
-                        }
-                    </ul>
+                            </div>
+
+                            <form action="@Url.Action("Auctions", "Item", new { itemId = item.ItemId })" method="post" class="bid-form">
+                                <input type="hidden" name="ItemId" value="@item.ItemId" />
+                                <input type="hidden" name="UserId" value="@userId" />
+                                <label class="input-tag">Bid Amount:</label>
+                                <input type="number" class="auction-input" name="BidAmount" min="@item.MinimumBidIncrement" required />
+                                <button class="auction-button" type="submit">Place bid</button>
+                            </form>
+
+                            <div class="time-remaining" data-time-remaining="@Math.Max(0, timeRemaining.TotalSeconds)">
+                                @if (timeRemaining.TotalSeconds <= 0)
+                                {
+                                    <span class="ended-text" aria-label="Auction ended">Auction ended</span>
+                                }
+                                else
+                                {
+                                    <span class="clock-icon" aria-label="Time remaining">⏰</span>
+                                    <span class="countdown">    @(timeRemaining.Days) days @(timeRemaining.Hours) hours @(timeRemaining.Minutes) minutes @(timeRemaining.Seconds) seconds</span>
+                                }
+                            </div>
+
+                            <div class="time-remaining" data-time-remaining="@Math.Max(0, timeRemaining.TotalSeconds)">
+                                @if (timeRemaining.TotalSeconds <= 0)
+                                {
+                                    <span class="ended-text" aria-label="Auction ended">Auction ended</span>
+                                }
+                                else
+                                {
+                                    <div class="countdown-box">
+                                        <span class="clock-icon" aria-hidden="true">
+                                            <!-- SVG or Font Awesome icon -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="alarm-icon" viewBox="0 0 16 16">
+                                                <path d="M8 3a5 5 0 1 0 0 10A5 5 0 0 0 8 3zM8 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0v-.5A.5.5 0 0 1 8 0zm5.657 2.343a.5.5 0 0 1 .707 0l.354.353a.5.5 0 0 1-.707.708l-.354-.354a.5.5 0 0 1 0-.707zM16 8a.5.5 0 0 1-.5.5h-.5a.5.5 0 0 1 0-1h.5A.5.5 0 0 1 16 8zM13.657 13.657a.5.5 0 0 1-.707 0l-.354-.353a.5.5 0 0 1 .707-.708l.354.354a.5.5 0 0 1 0 .707zM8 15a.5.5 0 0 1-.5-.5V14a.5.5 0 0 1 1 0v.5a.5.5 0 0 1-.5.5zm-5.657-1.343a.5.5 0 0 1-.707 0l-.354-.354a.5.5 0 0 1 .707-.707l.354.354a.5.5 0 0 1 0 .707zM1 8a.5.5 0 0 1 .5-.5h.5a.5.5 0 0 1 0 1H1.5A.5.5 0 0 1 1 8zm1.343-5.657a.5.5 0 0 1 .707 0l.354.354a.5.5 0 0 1-.707.707l-.354-.353a.5.5 0 0 1 0-.708z" />
+                                                <path d="M8 4.5a.5.5 0 0 1 .5.5v3.25l2.25 1.35a.5.5 0 1 1-.5.866l-2.5-1.5A.5.5 0 0 1 7.5 8V5a.5.5 0 0 1 .5-.5z" />
+                                            </svg>
+                                        </span>
+                                        <span class="countdown">    @(timeRemaining.Days) days @(timeRemaining.Hours) hours @(timeRemaining.Minutes) minutes @(timeRemaining.Seconds) seconds</span>
+                                    </div>
+                                }
+                            </div>
+
+
+                        </div>
+
+                        <div class="recent-bids">
+                            <h4>Recent Bids</h4>
+                            <ul>
+                                @{
+                                    bool hasBids = false;
+                                    foreach (var bid in item.RecentBids ?? new List<Kisvarda.Dnn.Dnn.Kisvarda.Aukcio.Models.Bid>())
+                                    {
+                                        hasBids = true;
+                                        <li>User ID: @bid.UserId - $@bid.Amount</li>
+                                    }
+                                }
+
+                                @if (!hasBids)
+                                {
+                                    <li>No bids yet.</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
